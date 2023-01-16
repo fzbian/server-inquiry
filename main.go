@@ -1,10 +1,11 @@
 package main
 
 import (
-	"fmt"
+	"github.com/fzbian/gologger"
 	"github.com/fzbian/server-inquiry/routes"
 	"github.com/fzbian/server-inquiry/utils"
 	"github.com/gofiber/fiber/v2"
+	"log"
 )
 
 func main() {
@@ -18,8 +19,8 @@ func main() {
 
 	res, err := utils.SaveToken()
 	if err != nil {
-		fmt.Println(err)
+		log.Fatal(err.Error())
 	}
-	fmt.Println(res)
+	gologger.Info(res, true)
 	app.Listen(":3000")
 }
