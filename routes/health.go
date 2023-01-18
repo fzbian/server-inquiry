@@ -8,7 +8,7 @@ import (
 
 func Health(c *fiber.Ctx) error {
 	token := c.FormValue("token")
-	content, err := utils.ReadToken(token)
+	content, err := utils.ReadToken()
 	if err != nil {
 		fmt.Println(err)
 	}

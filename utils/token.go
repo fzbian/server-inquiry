@@ -53,7 +53,7 @@ func SaveToken() (string, error) {
 	return res, nil
 }
 
-func ReadToken(token string) (string, error) {
+func ReadToken() (string, error) {
 	file, err := os.Open("token.yml")
 	if err != nil {
 		return "", nil
