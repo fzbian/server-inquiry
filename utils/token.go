@@ -3,7 +3,7 @@ package utils
 import (
 	"fmt"
 	"gopkg.in/yaml.v2"
-	"io/ioutil"
+	"io"
 	"math/rand"
 	"os"
 	"time"
@@ -56,21 +56,27 @@ func SaveToken() (string, error) {
 func ReadToken() (string, error) {
 	file, err := os.Open("token.yml")
 	if err != nil {
-		return "", nil
+		return "", err
 	}
-	defer func(file *os.File) {
-		file.Close()
-	}(file)
+	defer file.Close()
 
-	fileContent, err := ioutil.ReadAll(file)
-	if err != nil {
-		return "", nil
+	var tokenYAML []byte
+	buf := make([]byte, 1024)
+	for {
+		n, err := file.Read(buf)
+		if err != nil && err != io.EOF {
+			return "", err
+		}
+		if n == 0 {
+			break
+		}
+		tokenYAML = append(tokenYAML, buf[:n]...)
 	}
 
 	var content Token
-	err = yaml.Unmarshal(fileContent, &content)
+	err = yaml.Unmarshal(tokenYAML, &content)
 	if err != nil {
-		return "", nil
+		return "", err
 	}
 
 	return content.AccessToken, nil
