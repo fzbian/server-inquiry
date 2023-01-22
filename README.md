@@ -26,8 +26,17 @@ After running the start command the application will generate a local token, whi
        ![](https://media.discordapp.net/attachments/1052025865803939880/1064678216398278776/image.png?width=940&height=480)
      - `echo "Hello Windows!"`
        ![](https://media.discordapp.net/attachments/1052025865803939880/1064678336749637713/image.png?width=1020&height=215)
-   - Linux (Ubuntu)
+   - Linux (Debian)
        - `echo "Hello world"`
          ![](https://media.discordapp.net/attachments/1052025865803939880/1064684930346516559/image.png?width=1020&height=219)
        - `cat /proc/cpuinfo`
          ![](https://media.discordapp.net/attachments/1052025865803939880/1064685542903652433/image.png?width=922&height=480)
+
+## To-Do
+
+- [x] Security in Windows PowerShell commands
+- [ ] Security in Linux Debian commands
+- [ ] Compile the binary for use on any server
+- [ ] Improve the logger
+- [ ] Improve the speed of commands
+- [ ] Refactor the code to optimize it
