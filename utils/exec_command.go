@@ -10,7 +10,7 @@ var (
 	wg sync.WaitGroup
 )
 
-func ExecWindows(c *fiber.Ctx, command string) error {
+func ExecLinux(c *fiber.Ctx, command string) error {
 	cmd := exec.Command(command)
 	out, err := cmd.Output()
 	if err != nil {
@@ -23,7 +23,7 @@ func ExecWindows(c *fiber.Ctx, command string) error {
 	return nil
 }
 
-func ExecLinux(c *fiber.Ctx, command string) error {
+func ExecWindows(c *fiber.Ctx, command string) error {
 	cmd := exec.Command("powershell", "-Command", command)
 	out, err := cmd.Output()
 	if err != nil {
