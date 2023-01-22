@@ -21,10 +21,16 @@ func Command(c *fiber.Ctx) error {
 		so := c.FormValue("so")
 
 		if so == "windows" {
-			utils.ExecWindows(c, command)
+			err := utils.ExecWindows(c, command)
+			if err != nil {
+				return err
+			}
 			return nil
 		} else if so == "linux" {
-			utils.ExecLinux(c, command)
+			err := utils.ExecLinux(c, command)
+			if err != nil {
+				return err
+			}
 			return nil
 		}
 	}
