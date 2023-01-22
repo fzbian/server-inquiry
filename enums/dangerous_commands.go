@@ -17,4 +17,19 @@ var (
 		"Start-Service",
 		"Stop-Service",
 	}
+
+	Debian = []string{
+		"rm",
+		"dd",
+		"echo",
+		"chmod",
+		"shutdown",
+		"reboot",
+		"wget",
+		"mv",
+		"chown",
+		"iptables",
+		"kill",
+		"dkpg",
+	}
 )

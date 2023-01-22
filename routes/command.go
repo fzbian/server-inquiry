@@ -37,6 +37,13 @@ func Command(c *fiber.Ctx) error {
 			}
 			return nil
 		} else if so == "linux" {
+			for _, forbidden := range enums.Debian {
+				if strings.Contains(command, forbidden) {
+					DangerousCommandMessage := fmt.Sprintf("The %s command can be dangerous to use remotely.", command)
+					return c.Status(405).SendString(DangerousCommandMessage)
+				}
+			}
+
 			err := utils.ExecLinux(c, command)
 			if err != nil {
 				return err
