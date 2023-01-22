@@ -1,8 +1,11 @@
 package routes
 
 import (
+	"fmt"
+	"github.com/fzbian/server-inquiry/enums"
 	"github.com/fzbian/server-inquiry/utils"
 	"github.com/gofiber/fiber/v2"
+	"strings"
 )
 
 func Command(c *fiber.Ctx) error {
@@ -21,6 +24,13 @@ func Command(c *fiber.Ctx) error {
 		so := c.FormValue("so")
 
 		if so == "windows" {
+			for _, forbidden := range enums.PowerShell {
+				if strings.Contains(command, forbidden) {
+					DangerousCommandMessage := fmt.Sprintf("The %s command can be dangerous to use remotely.", command)
+					return c.Status(405).SendString(DangerousCommandMessage)
+				}
+			}
+
 			err := utils.ExecWindows(c, command)
 			if err != nil {
 				return err
