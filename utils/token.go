@@ -29,8 +29,7 @@ func GenerateToken() string {
 	return string(b)
 }
 
-func SaveToken() (string, error) {
-	token := GenerateToken()
+func SaveToken(token string) (string, error) {
 	content := &Token{AccessToken: token}
 
 	tokenYAML, err := yaml.Marshal(content)
