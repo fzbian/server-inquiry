@@ -16,7 +16,8 @@ func main() {
 	api.Get("/health", routes.Health)
 	api.Get("/command", routes.Command)
 
-	res, err := utils.SaveToken()
+	token := utils.GenerateToken()
+	res, err := utils.SaveToken(token)
 	if err != nil {
 		log.Println(err)
 	}
