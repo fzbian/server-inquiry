@@ -9,7 +9,10 @@ import (
 
 func main() {
 
-	app := fiber.New()
+	app := fiber.New(fiber.Config{
+		AppName:               "Server Inquiry",
+		DisableStartupMessage: true,
+	})
 
 	api := app.Group("/api")
 
