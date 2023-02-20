@@ -8,6 +8,11 @@ import (
 	"strings"
 )
 
+/*
+Command is in charge of obtaining the variables passed by the query and executing the necessary functions for its operation.
+Return:
+  - error: if there is an error, it is returned so that when the function is used, it can be reported.
+*/
 func Command(c *fiber.Ctx) error {
 	token := c.FormValue("token")
 	content, err := utils.ReadToken()
@@ -51,6 +56,5 @@ func Command(c *fiber.Ctx) error {
 			return nil
 		}
 	}
-
 	return nil
 }
