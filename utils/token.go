@@ -2,36 +2,29 @@ package utils
 
 import (
 	"fmt"
-	"gopkg.in/yaml.v2"
-	"io"
-	"math/rand"
-	"os"
-	"time"
+	"log"
+	"os/exec"
+
+	uuid "github.com/satori/go.uuid"
 )
 
 type Token struct {
 	AccessToken string
 }
 
+var Tokens *Token
+
 /*
 GenerateToken using mathematical functions generates a code that will be used as a token.
 Return:
   - string: The token generated in string format
 */
-func GenerateToken() string {
-	var (
-		ABC = "abcdefghijklmnñopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	)
+func GenerateToken() {
+	token := fmt.Sprintf("%s", uuid.NewV4())
 
-	rand.Seed(time.Now().UnixNano())
-	var letters []rune
-	letters = []rune(ABC)
-	b := make([]rune, 50)
+	Tokens = &Token{token}
 
-	for i := range b {
-		b[i] = letters[rand.Intn(len(letters))]
-	}
-	return string(b)
+	fmt.Println(token)
 }
 
 /*
@@ -43,10 +36,8 @@ Return:
   - string: returns a message informing the user what the token is, and is saved in a token.yml file.
   - error: if there is an error, it is returned so that when the function is used, it can be reported.
 */
-func SaveToken(token string) (string, error) {
-	content := &Token{AccessToken: token}
-
-	tokenYAML, err := yaml.Marshal(content)
+/*func SaveToken(token string) (string, error) {
+		tokenYAML, err := yaml.Marshal(content)
 	if err != nil {
 		return "", err
 	}
@@ -69,44 +60,26 @@ func SaveToken(token string) (string, error) {
 
 	res := fmt.Sprintf("Generated token, remember not to share it: %s", token)
 	return res, nil
-}
+}*/
 
 /*
-ReadToken reads the token.yml file to access the AccessToken variable and returns it
+VerifyToken reads the token.yml file to access the AccessToken variable and returns it
 Return:
   - string: returns the token in string format
   - error: if there is an error, it is returned so that when the function is used, it can be reported.
 */
-func ReadToken() (string, error) {
-	file, err := os.Open("token.yml")
+func VerifyToken(token string) bool {
+	return token == Tokens.AccessToken
+}
+
+func KillToken() {
+	x, err := exec.Command("clear").CombinedOutput()
+	fmt.Print(string(x))
 	if err != nil {
-		return "", err
-	}
-	defer func(file *os.File) {
-		err := file.Close()
-		if err != nil {
-
-		}
-	}(file)
-
-	var tokenYAML []byte
-	buf := make([]byte, 1024)
-	for {
-		n, err := file.Read(buf)
-		if err != nil && err != io.EOF {
-			return "", err
-		}
-		if n == 0 {
-			break
-		}
-		tokenYAML = append(tokenYAML, buf[:n]...)
+		log.Panic(err.Error())
 	}
 
-	var content Token
-	err = yaml.Unmarshal(tokenYAML, &content)
-	if err != nil {
-		return "", err
-	}
+	Tokens = &Token{""}
 
-	return content.AccessToken, nil
+	fmt.Println("This token was mistakenly removed from the server")
 }

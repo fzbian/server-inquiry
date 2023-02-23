@@ -2,11 +2,17 @@ package routes
 
 import (
 	"fmt"
+	"strings"
+
 	"github.com/fzbian/server-inquiry/enums"
 	"github.com/fzbian/server-inquiry/utils"
 	"github.com/gofiber/fiber/v2"
-	"strings"
 )
+
+type Response struct {
+	Message interface{}
+	Data    interface{}
+}
 
 /*
 Command is in charge of obtaining the variables passed by the query and executing the necessary functions for its operation.
@@ -17,16 +23,21 @@ func Command(c *fiber.Ctx) error {
 	QueryToken := c.FormValue("token")
 	QueryCommand := c.FormValue("cmd")
 
-	LocalToken, err := utils.ReadToken()
-	if err != nil {
-		fmt.Println(utils.Problem(enums.CantReadToken, err))
+	if QueryCommand == "" || QueryToken == "" {
+		return c.Status(400).JSON(Response{
+			Message: "Error",
+			Data:    "Token and Command are required",
+		})
 	}
 
-	if QueryToken != LocalToken {
-		err := c.SendStatus(401)
-		if err != nil {
-			fmt.Println(utils.Problem(enums.CantSendCode, err))
-		}
+	tokenExist := utils.VerifyToken(QueryToken)
+
+	if !tokenExist {
+		return c.Status(401).JSON(Response{
+			Message: "Error",
+			Data:    "This token not exist",
+		})
+
 	}
 
 	for _, forbidden := range enums.Debian {
@@ -36,7 +47,7 @@ func Command(c *fiber.Ctx) error {
 		}
 	}
 
-	err = utils.Exec(c, QueryCommand)
+	err := utils.Exec(c, QueryCommand)
 	if err != nil {
 		fmt.Println(utils.Problem(enums.CantExecCommand, err))
 	}
