@@ -1,8 +1,6 @@
 package routes
 
 import (
-	"fmt"
-	"github.com/fzbian/server-inquiry/enums"
 	"github.com/fzbian/server-inquiry/utils"
 	"github.com/gofiber/fiber/v2"
 )
@@ -16,14 +14,11 @@ Return:
 */
 func Health(c *fiber.Ctx) error {
 	token := c.FormValue("token")
-	content, err := utils.ReadToken()
-	if err != nil {
-		fmt.Println(utils.Problem(enums.CantReadToken, err))
-	}
-	if token != content {
+
+	tokenExist := utils.VerifyToken(token)
+	if !tokenExist {
 		return c.SendStatus(401)
-	} else {
-		return c.SendStatus(200)
 	}
-	return nil
+
+	return c.SendStatus(200)
 }
