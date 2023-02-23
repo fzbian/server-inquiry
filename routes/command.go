@@ -14,47 +14,31 @@ Return:
   - error: if there is an error, it is returned so that when the function is used, it can be reported.
 */
 func Command(c *fiber.Ctx) error {
-	token := c.FormValue("token")
-	content, err := utils.ReadToken()
+	QueryToken := c.FormValue("token")
+	QueryCommand := c.FormValue("cmd")
+
+	LocalToken, err := utils.ReadToken()
 	if err != nil {
-		return err
+		fmt.Println(utils.Problem(enums.CantReadToken, err))
 	}
-	if token != content {
+
+	if QueryToken != LocalToken {
 		err := c.SendStatus(401)
 		if err != nil {
-			return err
+			fmt.Println(utils.Problem(enums.CantSendCode, err))
 		}
-	} else {
-		command := c.FormValue("cmd")
-		so := c.FormValue("so")
+	}
 
-		if so == "windows" {
-			for _, forbidden := range enums.PowerShell {
-				if strings.Contains(command, forbidden) {
-					DangerousCommandMessage := fmt.Sprintf("The %s command can be dangerous to use remotely.", command)
-					return c.Status(405).SendString(DangerousCommandMessage)
-				}
-			}
-
-			err := utils.ExecWindows(c, command)
-			if err != nil {
-				return err
-			}
-			return nil
-		} else if so == "linux" {
-			for _, forbidden := range enums.Debian {
-				if strings.Contains(command, forbidden) {
-					DangerousCommandMessage := fmt.Sprintf("The %s command can be dangerous to use remotely.", command)
-					return c.Status(405).SendString(DangerousCommandMessage)
-				}
-			}
-
-			err := utils.ExecLinux(c, command)
-			if err != nil {
-				return err
-			}
-			return nil
+	for _, forbidden := range enums.Debian {
+		if strings.Contains(QueryCommand, forbidden) {
+			DangerousCommandMessage := fmt.Sprintf(enums.DangerousCommand, QueryCommand)
+			return c.Status(405).SendString(DangerousCommandMessage)
 		}
+	}
+
+	err = utils.Exec(c, QueryCommand)
+	if err != nil {
+		fmt.Println(utils.Problem(enums.CantExecCommand, err))
 	}
 	return nil
 }
