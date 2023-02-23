@@ -13,17 +13,16 @@ func main() {
 		AppName:               "Server Inquiry",
 		DisableStartupMessage: true,
 	})
-
 	api := app.Group("/api")
 
 	api.Get("/health", routes.Health)
 	api.Get("/command", routes.Command)
 
+	Start()
 	err := app.Listen(":3000")
 	if err != nil {
 		fmt.Println(utils.Problem(enums.ServerNotStartup, err))
 	}
-	Start()
 }
 
 func Start() {
