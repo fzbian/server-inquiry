@@ -1,10 +1,13 @@
 package main
 
 import (
+	"github.com/fzbian/server-inquiry/enums"
 	"github.com/fzbian/server-inquiry/routes"
 	"github.com/fzbian/server-inquiry/utils"
 	"github.com/gofiber/fiber/v2"
 )
+
+var PORT = "3000"
 
 func main() {
 	app := fiber.New(fiber.Config{
@@ -18,8 +21,8 @@ func main() {
 	api.Get("/command", routes.Command)
 
 	utils.GenerateToken()
-	err := app.Listen(":8080")
-	if err.Error() == "failed to listen: listen tcp4 :8080: bind: address already in use" {
+	err := app.Listen(":" + PORT)
+	if err.Error() == utils.Indicate(enums.PortAlreadyUsed, PORT) {
 		utils.KillToken()
 	}
 }

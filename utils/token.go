@@ -28,42 +28,7 @@ func GenerateToken() {
 }
 
 /*
-SaveToken saves the token to a local file for later reading
-Parameters:
-  - string (token): takes the generated token, the GenerateToken function is used to generate it.
-
-Return:
-  - string: returns a message informing the user what the token is, and is saved in a token.yml file.
-  - error: if there is an error, it is returned so that when the function is used, it can be reported.
-*/
-/*func SaveToken(token string) (string, error) {
-		tokenYAML, err := yaml.Marshal(content)
-	if err != nil {
-		return "", err
-	}
-
-	file, err := os.Create("token.yml")
-	if err != nil {
-		return "", err
-	}
-	defer func(file *os.File) {
-		err := file.Close()
-		if err != nil {
-
-		}
-	}(file)
-
-	_, err = file.Write(tokenYAML)
-	if err != nil {
-		return "", err
-	}
-
-	res := fmt.Sprintf("Generated token, remember not to share it: %s", token)
-	return res, nil
-}*/
-
-/*
-VerifyToken reads the token.yml file to access the AccessToken variable and returns it
+VerifyToken uses uuid to generate the token in hash format
 Return:
   - string: returns the token in string format
   - error: if there is an error, it is returned so that when the function is used, it can be reported.
