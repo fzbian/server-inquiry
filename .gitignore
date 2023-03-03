@@ -36,6 +36,8 @@ go.work
 .idea/**/shelf
 .idea
 
+logs.txt
+
 # AWS User-specific
 .idea/**/aws.xml
 

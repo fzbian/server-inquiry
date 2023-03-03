@@ -10,8 +10,7 @@ import (
 )
 
 type Response struct {
-	Message interface{}
-	Data    interface{}
+	Error interface{}
 }
 
 /*
@@ -25,8 +24,7 @@ func Command(c *fiber.Ctx) error {
 
 	if QueryCommand == "" || QueryToken == "" {
 		return c.Status(400).JSON(Response{
-			Message: "Error",
-			Data:    "Token and Command are required",
+			Error: enums.ParamsRequired,
 		})
 	}
 
@@ -34,8 +32,7 @@ func Command(c *fiber.Ctx) error {
 
 	if !tokenExist {
 		return c.Status(401).JSON(Response{
-			Message: "Error",
-			Data:    "This token not exist",
+			Error: enums.WrongToken,
 		})
 
 	}
