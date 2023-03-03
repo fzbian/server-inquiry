@@ -2,9 +2,6 @@ package utils
 
 import (
 	"fmt"
-	"log"
-	"os/exec"
-
 	uuid "github.com/satori/go.uuid"
 )
 
@@ -19,12 +16,12 @@ GenerateToken using mathematical functions generates a code that will be used as
 Return:
   - string: The token generated in string format
 */
-func GenerateToken() {
+func GenerateToken() string {
 	token := fmt.Sprintf("%s", uuid.NewV4())
 
 	Tokens = &Token{token}
 
-	fmt.Println(token)
+	return token
 }
 
 /*
@@ -38,13 +35,9 @@ func VerifyToken(token string) bool {
 }
 
 func KillToken() {
-	x, err := exec.Command("clear").CombinedOutput()
-	fmt.Print(string(x))
-	if err != nil {
-		log.Panic(err.Error())
-	}
+	//TODO clear terminal
 
 	Tokens = &Token{""}
 
-	fmt.Println("This token was mistakenly removed from the server")
+	fmt.Println("\nI can't start the server, the port is in use.\nThis token was mistakenly removed from the server")
 }

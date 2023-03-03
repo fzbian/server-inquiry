@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/fzbian/server-inquiry/enums"
 	"github.com/fzbian/server-inquiry/routes"
 	"github.com/fzbian/server-inquiry/utils"
@@ -20,7 +21,8 @@ func main() {
 	api.Get("/health", routes.Health)
 	api.Get("/command", routes.Command)
 
-	utils.GenerateToken()
+	token := utils.GenerateToken()
+	fmt.Printf("Token: %s", token)
 	err := app.Listen(":" + PORT)
 	if err.Error() == utils.Indicate(enums.PortAlreadyUsed, PORT) {
 		utils.KillToken()
