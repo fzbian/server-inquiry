@@ -10,4 +10,5 @@ var (
 	ParamsRequired    = "\nToken and command required"
 	WrongToken        = "\nThe indicated token is invalid"
 	CantClearTerminal = "\nI cannot delete the terminal: %s"
+	CantStartServer   = "\nI cannot initialize the server: %s"
 )

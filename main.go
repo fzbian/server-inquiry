@@ -33,9 +33,8 @@ func main() {
 
 		StringPORT := strconv.Itoa(PORT)
 		err = app.Listen(":" + StringPORT)
-
 		if err == nil {
-			fmt.Println(err.Error())
+			fmt.Println(utils.Problem(enums.CantStartServer, err))
 			break
 		}
 		PORT++
