@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/fzbian/server-inquiry/enums"
 	"github.com/fzbian/server-inquiry/routes"
 	"github.com/fzbian/server-inquiry/utils"
 	"github.com/gofiber/fiber/v2"
@@ -25,7 +26,7 @@ func main() {
 
 		err := utils.ClearTerminal()
 		if err != nil {
-			fmt.Println(err.Error())
+			fmt.Println(utils.Problem(enums.CantClearTerminal, err))
 		}
 		token := utils.GenerateToken()
 		fmt.Printf("Server PORT: %d\nToken: %s\n", PORT, token)
@@ -41,7 +42,7 @@ func main() {
 
 		err = utils.ClearTerminal()
 		if err != nil {
-			fmt.Println(err.Error())
+			fmt.Println(utils.Problem(enums.CantClearTerminal, err))
 		}
 	}
 }

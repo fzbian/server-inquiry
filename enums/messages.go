@@ -1,12 +1,13 @@
 package enums
 
 var (
-	DangerousCommand  = "The %s command can be dangerous to use remotely"
-	CantReadOutputCmd = "I cannot read the output of the command: %s"
-	CantSendOutputCmd = "I cannot send the output of the command: %s"
-	CantExecCommand   = "The command cannot be executed: %s"
-	CantCloseFile     = "I cannot close the file: %s"
-	CantWriteFile     = "I cannot write to the file: %s"
-	ParamsRequired    = "Token and command required"
-	WrongToken        = "The indicated token is invalid"
+	DangerousCommand  = "\nThe %s command can be dangerous to use remotely"
+	CantReadOutputCmd = "\nI cannot read the output of the command: %s"
+	CantSendOutputCmd = "\nI cannot send the output of the command: %s"
+	CantExecCommand   = "\nThe command cannot be executed: %s"
+	CantCloseFile     = "\nI cannot close the file: %s"
+	CantWriteFile     = "\nI cannot write to the file: %s"
+	ParamsRequired    = "\nToken and command required"
+	WrongToken        = "\nThe indicated token is invalid"
+	CantClearTerminal = "\nI cannot delete the terminal: %s"
 )
