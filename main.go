@@ -28,8 +28,9 @@ func main() {
 		if err != nil {
 			fmt.Println(utils.Problem(enums.CantClearTerminal, err))
 		}
+		ip := utils.GetIP()
 		token := utils.GenerateToken()
-		fmt.Printf("Server PORT: %d\nToken: %s\n", PORT, token)
+		fmt.Printf("Server IP: %s:%d\nToken: %s\n", ip, PORT, token)
 
 		StringPORT := strconv.Itoa(PORT)
 		err = app.Listen(":" + StringPORT)
