@@ -44,9 +44,17 @@ func Command(c *fiber.Ctx) error {
 		}
 	}
 
-	err := utils.Exec(c, QueryCommand)
-	if err != nil {
-		fmt.Println(utils.Problem(enums.CantExecCommand, err))
+	res, err := utils.Exec(c, QueryCommand)
+	if err != nil && err.Error() == "exit status 127" {
+		err := c.SendString(utils.Indicate(enums.CommandNotFound, QueryCommand))
+		if err != nil {
+			fmt.Println(utils.Indicate(enums.CantSendOutputCmd, err))
+		}
+	} else {
+		err := c.SendString(res)
+		if err != nil {
+			fmt.Println(utils.Indicate(enums.CantSendOutputCmd, err))
+		}
 	}
 	return nil
 }
