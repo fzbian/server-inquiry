@@ -30,7 +30,7 @@ func Exec(c *fiber.Ctx, command string) error {
 	// Saves logs
 	err = Log(c, command)
 	if err != nil {
-		fmt.Println("error 1: ", err.Error())
+		fmt.Println(Problem(enums.CantSaveLog, err))
 	}
 
 	// Returns the output in string format

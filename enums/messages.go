@@ -11,4 +11,5 @@ var (
 	WrongToken        = "\nThe indicated token is invalid"
 	CantClearTerminal = "\nI cannot delete the terminal: %s"
 	CantStartServer   = "\nI cannot initialize the server: %s"
+	CantSaveLog       = "\nI cannot save log:  %s"
 )
