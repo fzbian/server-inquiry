@@ -23,10 +23,8 @@ Return:
 */
 func Exec(c *fiber.Ctx, command string) error {
 
-	// PowerShell
-	cmd := exec.Command("powershell", "-Command", command)
-	// Debian
-	//cmd := exec.Command("/bin/bash", "-c", command)
+	//Debian
+	cmd := exec.Command("/bin/bash", "-c", command)
 
 	out, err := cmd.Output()
 	if err != nil {

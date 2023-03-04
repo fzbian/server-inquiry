@@ -22,7 +22,7 @@ func main() {
 	api.Get("/command", routes.Command)
 
 	token := utils.GenerateToken()
-	fmt.Printf("Token: %s", token)
+	fmt.Printf("Token: %s\n", token)
 	err := app.Listen(":" + PORT)
 	if err.Error() == utils.Indicate(enums.PortAlreadyUsed, PORT) {
 		utils.KillToken()
