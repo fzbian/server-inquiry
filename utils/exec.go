@@ -4,12 +4,8 @@ import (
 	"fmt"
 	"github.com/fzbian/server-inquiry/enums"
 	"github.com/gofiber/fiber/v2"
+	"os"
 	"os/exec"
-	"sync"
-)
-
-var (
-	wg sync.WaitGroup
 )
 
 /*
@@ -43,4 +39,10 @@ func Exec(c *fiber.Ctx, command string) error {
 		fmt.Println(Problem(enums.CantSendOutputCmd, err))
 	}
 	return nil
+}
+
+func ClearTerminal() error {
+	cmd := exec.Command("clear")
+	cmd.Stdout = os.Stdout
+	return cmd.Run()
 }

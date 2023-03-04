@@ -2,29 +2,46 @@ package main
 
 import (
 	"fmt"
-	"github.com/fzbian/server-inquiry/enums"
 	"github.com/fzbian/server-inquiry/routes"
 	"github.com/fzbian/server-inquiry/utils"
 	"github.com/gofiber/fiber/v2"
+	"strconv"
 )
 
-var PORT = "3000"
+var PORT = 8000
+var app *fiber.App
 
 func main() {
-	app := fiber.New(fiber.Config{
-		AppName:               "Server Inquiry",
-		DisableStartupMessage: true,
-	})
 
-	api := app.Group("/api")
+	for i := 0; i < 50; i++ {
+		app = fiber.New(fiber.Config{
+			AppName:               "Server Inquiry",
+			DisableStartupMessage: true,
+		})
 
-	api.Get("/health", routes.Health)
-	api.Get("/command", routes.Command)
+		api := app.Group("/api")
+		api.Get("/health", routes.Health)
+		api.Get("/command", routes.Command)
 
-	token := utils.GenerateToken()
-	fmt.Printf("Token: %s\n", token)
-	err := app.Listen(":" + PORT)
-	if err.Error() == utils.Indicate(enums.PortAlreadyUsed, PORT) {
-		utils.KillToken()
+		err := utils.ClearTerminal()
+		if err != nil {
+			fmt.Println(err.Error())
+		}
+		token := utils.GenerateToken()
+		fmt.Printf("Server PORT: %d\nToken: %s\n", PORT, token)
+
+		StringPORT := strconv.Itoa(PORT)
+		err = app.Listen(":" + StringPORT)
+
+		if err == nil {
+			fmt.Println(err.Error())
+			break
+		}
+		PORT++
+
+		err = utils.ClearTerminal()
+		if err != nil {
+			fmt.Println(err.Error())
+		}
 	}
 }
