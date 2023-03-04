@@ -3,8 +3,6 @@ package utils
 import (
 	"fmt"
 	uuid "github.com/satori/go.uuid"
-	"os"
-	"os/exec"
 )
 
 type Token struct {
@@ -34,17 +32,4 @@ Return:
 */
 func VerifyToken(token string) bool {
 	return token == Tokens.AccessToken
-}
-
-func KillToken() {
-	cmd := exec.Command("clear")
-	cmd.Stdout = os.Stdout
-	err := cmd.Run()
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-
-	Tokens = &Token{""}
-
-	fmt.Println("I can't start the server, the port is in use.\nThis token was mistakenly removed from the server")
 }
