@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"github.com/fzbian/server-inquiry/enums"
+	"github.com/gofiber/fiber/v2"
 	"os"
 	"time"
 )
@@ -16,7 +17,7 @@ Parameters:
 Return:
   - error: if there is an error, it is returned so that when the function is used, it can be reported.
 */
-func Log(logs ...string) error {
+func Log(c *fiber.Ctx, logs ...string) error {
 	Date := time.Now()
 	FormatDate := Date.Format("2006-01-02 15:04:05")
 
@@ -34,7 +35,7 @@ func Log(logs ...string) error {
 	descriptor := bufio.NewWriter(file)
 
 	for _, log := range logs {
-		_, err := descriptor.WriteString("[" + FormatDate + "]: " + log + "\n")
+		_, err := descriptor.WriteString("[" + FormatDate + "] " + "(" + c.IP() + "): " + log + "\n")
 		if err != nil {
 			fmt.Println(Problem(enums.CantWriteFile, err))
 		}
