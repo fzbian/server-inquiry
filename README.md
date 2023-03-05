@@ -4,15 +4,25 @@ ServerInquiry is an API that enables communication between external applications
 
 ## Requirements
 
- - Debian Server
+- Minimum requirements
+  - RAM: 216MB
+  - CPU: 1 core
+  - Memory: 500MB
+  - Debian Server
 
 ## Installation
 
-Clone and run the program with the following commands
+Follow the following commands on your server to do the installation correctly
+```bash
+$ curl -LO https://raw.githubusercontent.com/fzbian/server-inquiry/main/tools/install.sh
+$ chmod +x install.sh
+$ ./install.sh
 ```
-$ curl https://github.com/fzbian/server-inquiry/releases/download/v1.0.0b/server-inquiry
-$ ./server-inquiry
+The console will return the following message
+```bash
+ServerInquiry (1.0.0b) is ready for use.
 ```
+Now you can use `server-inquiry` at any time.
 
 ## API Reference
 
@@ -45,7 +55,11 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE.md) fi
 
 ## Example
 
-You can use the API in the following way, with the following example code.
+By running `server-inquiry` the console will return this information
+
+![](docs/terminal-preview.png)
+
+You can implement the request in your application code, here is an example code in go.
 
 ```go
 package main
@@ -57,9 +71,9 @@ import (
 )
 
 var (
-	ip      = "ip"
-	port    = "port"
-	token   = "token"
+	ip      = "64.225.107.137"
+	port    = "8000"
+	token   = "20f8637e-5b66-44e5-a151-afcdd83d407e"
 	command = "pwd"
 )
 
@@ -84,9 +98,14 @@ func main() {
 }
 ```
 
-Output:
+Or
+If you wish to make a direct request
+
+![](docs/postman-preview.png)
+
+The two examples will answer the same:
 ```bash
-/home/fzbian/Workspace/server-inquiry
+/root
 ```
 
 ## Acknowledgments
