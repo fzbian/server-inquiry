@@ -57,7 +57,10 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE.md) fi
 
 By running `server-inquiry` the console will return this information
 
-![](docs/terminal-preview.png)
+```bash
+Server IP: 127.0.0.1:8000
+Token: <Token>
+```
 
 You can implement the request in your application code, here is an example code in go.
 
@@ -71,9 +74,9 @@ import (
 )
 
 var (
-	ip      = "64.225.107.137"
-	port    = "8000"
-	token   = "20f8637e-5b66-44e5-a151-afcdd83d407e"
+	ip      = "ip"
+	port    = "port"
+	token   = "token"
 	command = "pwd"
 )
 
@@ -101,7 +104,9 @@ func main() {
 Or
 If you wish to make a direct request
 
-![](docs/postman-preview.png)
+```bash
+curl -X GET "http://<ip>:<port>/api/command?token=<token>&cmd=pwd"
+```
 
 The two examples will answer the same:
 ```bash
