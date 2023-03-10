@@ -4,11 +4,12 @@ ServerInquiry is an API that enables communication between external applications
 
 ## Requirements
 
-- Minimum requirements
-  - RAM: 216MB
-  - CPU: 1 core
-  - Memory: 500MB
-  - Debian Server
+- Ubuntu
+- Debian
+- CentOS
+- Red Hat Enterprise
+- FreeBSD
+- OpenBSD
 
 ## Installation
 
